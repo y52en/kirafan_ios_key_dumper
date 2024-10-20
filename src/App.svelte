@@ -1,7 +1,40 @@
+<script context="module" lang="ts">
+  declare function dumpKeys(
+    keychain: Uint8Array,
+    manifest: Uint8Array,
+    password: string,
+    out: Uint8Array
+  ): string;
+  declare function dumpKey(
+    keychain: Uint8Array,
+    manifest: Uint8Array,
+    password: string,
+    keyType: string,
+    key: string
+  ): string;
+</script>
+
 <script lang="ts">
-  import svelteLogo from './assets/svelte.svg'
-  import viteLogo from '/vite.svg'
-  import Counter from './lib/Counter.svelte'
+  // declareされる型だけ使いたいので、何もimportしない
+  // FIXME: スマートな方法があれば修正する
+  // @ts-ignore
+  import type {} from "@types/golang-wasm-exec";
+  import wasmUrl from "./assets/irestore.wasm?url";
+
+  type result =
+    | {
+        result: "error";
+        error: string;
+      }
+    | {
+        result: "success";
+        data: string;
+      };
+
+  // 他にもフィールドがあるが、今回は使わないので省略
+  interface keychainData {
+    v_Data: string;
+  }
 </script>
 
 <main>
